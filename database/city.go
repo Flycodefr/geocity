@@ -1,5 +1,7 @@
 package database
 
+import "strings"
+
 type City struct {
 	ID uint64 `sql:"type:bigint PRIMARY KEY`
 
@@ -30,4 +32,14 @@ func CityCount() int {
 	db.Table("cities").Count(&count)
 
 	return count
+}
+
+func CitySearch(cp string, name string) []City {
+	db, _ := GetDataBase()
+	defer db.Close()
+
+	var cities []City
+	db.Where("full_name LIKE ? AND postal_code LIKE ?", "%"+strings.ToUpper(name)+"%", "%"+cp+"%").Find(&cities)
+
+	return cities
 }

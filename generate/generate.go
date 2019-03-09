@@ -49,7 +49,7 @@ func LinkPlaces() {
 	db.Where("lat NOT LIKE 0 AND long NOT LIKE 0").Find(&cities)
 	cpt := 1
 	for _, city := range cities {
-		client, err := maps.NewClient(maps.WithAPIKey("AIzaSyBeZzoKpc0RGZEVXiQRnG-MVdtcFenFuG4"))
+		client, err := maps.NewClient(maps.WithAPIKey("YOUR API KEY"))
 		if err != nil {
 			fmt.Printf("Error : %v\n", err)
 			panic("failed to connect at Google CLoud")
@@ -65,7 +65,7 @@ func LinkPlaces() {
 			panic("failed to find place")
 		}
 
-		fmt.Printf("(%v%%) %v/%v  ", ((cpt / len(cities)) * 100), cpt, len(cities))
+		fmt.Printf("(%v/%v)  ", cpt, len(cities))
 
 		if len(resp) > 0 {
 			city.Lat = resp[0].Geometry.Location.Lat
